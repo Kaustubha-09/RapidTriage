@@ -125,26 +125,12 @@ The application features a comprehensive user interface designed for both mobile
 - **Quick Actions**: One-tap access to directions and direct calling
 - **Location Services**: Automatic location detection with manual override option
 
-### Project Documentation
-
-Comprehensive project documentation including progress reports, final reports, and detailed methodology can be found in the `docs/images/` directory.
-
-![Project Progress Report](docs/images/progress_report_thumbnail.png)
-
-*Project Progress Report - RapidTriage AI (CS 5100, Spring 2025)*
-
 ### Live Demo
 <!-- Add links to Expo Go, web demo, or app store links -->
 
 ---
 
 ## 👥 Team
-
-<div align="center">
-
-**Course**: CS 5100 - Artificial Intelligence | **Semester**: Spring 2025 | **Institution**: Northeastern University
-
-</div>
 
 | Team Member | Contributions |
 |-------------|--------------|
@@ -262,23 +248,15 @@ For a detailed visual representation of the system architecture and component in
 
 ### Project Documentation
 
-The following documents provide detailed information about the project's methodology, results, and implementation:
-
 <div align="center">
 
 ![Project Progress Report](docs/images/progress_report_thumbnail.png)
 
-*Figure 1: Project Progress Report - RapidTriage AI (CS 5100, Spring 2025)*
+*Project Progress Report - RapidTriage AI (CS 5100, Spring 2025)*
 
 </div>
 
-#### Key Highlights from Reports
-
-- ✅ **Detailed Methodology**: Comprehensive explanation of combining LLM and rules-based triage systems
-- ✅ **Performance Metrics**: In-depth accuracy analysis across different symptom categories
-- ✅ **False Positive Monitoring**: Threshold calibration strategies and optimization techniques
-- ✅ **System Architecture**: Detailed workflow diagrams and component interactions
-- ✅ **Team Contributions**: Clear breakdown of individual contributions and responsibilities
+Comprehensive project documentation including progress reports, final reports, and detailed methodology can be found in the `docs/images/` directory. The reports include detailed methodology, performance metrics, false positive monitoring strategies, system architecture diagrams, and team contributions.
 
 > **📄 Note**: Full project reports (Progress Report & Final Report) are available in the repository. For higher quality images or specific diagrams, refer to the original PDF documents in the `docs/` directory.
 
@@ -367,7 +345,7 @@ NODE_ENV=development
 6. Copy the key to your `.env` file
 
 **Backend API:**
-- The backend runs locally by default at `http://localhost:8080/api/v1`
+- Runs locally by default at `http://localhost:8080/api/v1`
 - For production, update `API_BASE_URL` to your deployed backend URL
 
 ### Step 4: Start Development Servers
@@ -389,8 +367,6 @@ cd agent
 go run cmd/server/main.go
 ```
 
-The backend API will be available at `http://localhost:8080/api/v1`
-
 ## 🏃 Running the App
 
 ### Mobile Development
@@ -405,17 +381,6 @@ npm run android
 # Web
 npm run web
 ```
-
-### Backend Server
-
-The backend is a Go service located in the `agent/` directory:
-
-```bash
-cd agent
-go run cmd/server/main.go
-```
-
-The backend API will be available at `http://localhost:8080/api/v1`
 
 ## 🏗️ Project Structure
 
@@ -509,25 +474,13 @@ The architecture follows a streamlined five-step workflow:
 | `POST` | `/api/v1/emergency/text` | Text-based symptom triage analysis |
 | `POST` | `/api/v1/emergency` | Voice/audio-based triage analysis |
 
-### Backend Architecture
-
-```
-agent/
-├── cmd/server/          # Server entry point
-├── internal/
-│   ├── ai/             # AI provider integrations (OpenAI, Claude, Gemini)
-│   ├── api/            # HTTP handlers and middleware
-│   ├── config/         # Configuration management
-│   ├── models/         # Data models and structures
-│   ├── tools/          # Tool integrations (ambulance, booking, hospital)
-│   └── triage/         # Triage classification logic
-```
-
 ### Connecting to Backend
 
-1. **Local Development**: Backend runs on `http://localhost:8080/api/v1` by default
+1. **Local Development**: Backend runs on `http://localhost:8080/api/v1` by default (see [Installation](#-installation) for setup)
 2. **Production**: Update `API_BASE_URL` in `.env` to your production endpoint
 3. **Authentication**: Add authentication headers in `src/services/ChatService.js` if required
+
+> **Note**: For detailed backend architecture, see the [Project Structure](#-project-structure) section above.
 
 ## 📱 Permissions
 
@@ -575,32 +528,6 @@ npm test
 - **TypeScript**: Type checking for improved code reliability
 - **Prettier**: Code formatting (if configured)
 - **Git Hooks**: Pre-commit checks (if configured)
-
-### Project Structure
-
-```
-RapidTriage/
-├── agent/                      # Go backend service
-│   ├── cmd/server/            # Server entry point
-│   ├── internal/
-│   │   ├── ai/               # AI provider integrations
-│   │   ├── api/              # HTTP handlers
-│   │   ├── config/           # Configuration
-│   │   ├── models/           # Data models
-│   │   ├── tools/            # Tool integrations
-│   │   └── triage/           # Triage logic
-│   └── go.mod                # Go dependencies
-├── src/
-│   ├── components/           # Reusable React components
-│   │   ├── hospitals/       # Hospital-related components
-│   │   └── VoiceRecorder.js # Voice recording component
-│   ├── screens/             # App screens
-│   ├── services/            # API and service integrations
-│   └── utils/               # Utility functions
-├── assets/                  # Images, fonts, icons
-├── constants/              # App constants
-└── package.json            # Node.js dependencies
-```
 
 ## 🎓 What I Learned
 
@@ -723,8 +650,6 @@ This project builds upon foundational research in medical AI and triage systems:
 ---
 
 **Built with ❤️ using React Native, Go, and AI**
-
-**CS 5100 - Artificial Intelligence | Spring 2025 | Northeastern University**
 
 ⭐ **Star this repo if you find it helpful!** ⭐
 
