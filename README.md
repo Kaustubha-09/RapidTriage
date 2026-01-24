@@ -51,6 +51,41 @@ RapidTriage addresses these challenges through a unique **hybrid AI architecture
 
 ## 🎬 Demo
 
+### UI/UX Design
+
+![UI/UX Mockup](docs/images/ui_mockup.png)
+
+*Mobile & Web UI Experience - RapidTriage AI*
+
+The application features a comprehensive user interface designed for both mobile and web platforms:
+
+**Mobile Screens:**
+- **Symptom Checker**: Intuitive input interface for reporting symptoms
+- **Clarification Dialogs**: Interactive questioning system for gathering detailed symptom information
+- **Triage Results**: Clear visual indicators showing urgency levels (Urgent, Critical, etc.)
+
+**Web Dashboard:**
+- **Alerts View**: Real-time monitoring of critical and urgent cases
+- **Session History**: Historical tracking of patient interactions and triage assessments
+
+### Application Screenshots
+
+![App Screens](docs/images/app_screens.png)
+
+*RapidTriage AI Mobile Application*
+
+**Left Screen - Emergency Assistance:**
+- Real-time symptom reporting with chat interface
+- Emergency alert system with priority indicators
+- Detailed triage assessment with location, timestamps, and confidence scores
+- Voice and text input options
+
+**Right Screen - Hospital Finder:**
+- Interactive map view showing user location
+- Nearby hospitals listing with distance, ratings, and status
+- Quick actions: Directions and Call functionality
+- Real-time hospital availability information
+
 ### Project Documentation
 
 Comprehensive project documentation including progress reports, final reports, and detailed methodology can be found in the `docs/images/` directory.
@@ -58,14 +93,6 @@ Comprehensive project documentation including progress reports, final reports, a
 ![Project Progress Report](docs/images/progress_report_thumbnail.png)
 
 *Project Progress Report - RapidTriage AI (CS 5100, Spring 2025)*
-
-### App Screenshots
-<!-- 
-![Home Screen](screenshots/home.png)
-![Assessment Screen](screenshots/assessment.png)
-![Hospital Finder](screenshots/hospitals.png)
-![Results Screen](screenshots/results.png)
--->
 
 ### Live Demo
 <!-- Add links to Expo Go, web demo, or app store links -->
@@ -170,9 +197,13 @@ Comprehensive project documentation including progress reports, final reports, a
 
 ### Workflow
 
+The system follows a streamlined workflow process:
+
 ```
 User Input → LLM Clarification → Rule Engine → Triage Output → Hospital Alerts (if critical)
 ```
+
+For a detailed visual representation of the system architecture and component interactions, see the [System Architecture Diagram](#-backend-integration) section.
 
 ### Project Documentation
 
@@ -383,6 +414,25 @@ RapidTriage/
 ## 🔌 Backend Integration
 
 RapidTriage uses a Go-based backend service for AI-powered triage analysis. The backend architecture supports multiple AI providers with intelligent fallback mechanisms.
+
+### System Architecture
+
+![System Architecture Diagram](docs/images/architecture_diagram.png)
+
+*RapidTriage AI System Architecture - Workflow: Input → LLM Clarification → Rule Engine → Output → Alerts*
+
+The architecture follows a five-step workflow:
+
+1. **User Input**: Users interact through the mobile application
+2. **LLM Clarification**: The Coordinator queries multiple LLM providers (OpenAI, Claude, Gemini) for symptom clarification
+3. **Rule Engine**: Structured outputs are processed through clinically validated triage rules
+4. **Output**: Triage results are generated with urgency classifications
+5. **Alerts**: Critical cases trigger automated alerts through integrated tools
+
+**Key Components:**
+- **Coordinator**: Central orchestrator managing workflow between user input, AI models, and tools
+- **AI Models**: Multi-provider LLM support (OpenAI, Claude, Gemini) with fallback mechanisms
+- **Tools**: Hospital Pager, Ambulance Pager, and future integrations (Appointment Booking System)
 
 ### API Endpoints
 
