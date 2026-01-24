@@ -17,25 +17,37 @@
 
 ## 📖 About
 
-RapidTriage is a full-stack mobile application designed to provide quick medical triage assessments and help users locate nearby healthcare facilities during emergencies. The app combines **AI-powered symptom analysis** with **real-time location services** to deliver a comprehensive emergency medical assistance solution.
+RapidTriage is a full-stack mobile application designed to provide real-time, AI-driven medical triage assessments and help users locate nearby healthcare facilities during emergencies. The app employs a **hybrid AI approach** combining large language models (LLMs) with clinically validated rules-based triage frameworks (Manchester Triage System/ESI) to deliver accurate, standardized urgency classifications.
+
+**Academic Context**: This project was developed for **CS 5100 - Artificial Intelligence** (Spring 2025) at Northeastern University, demonstrating the intersection of healthcare, mobile computing, and artificial intelligence.
 
 ### Problem Statement
 
-During medical emergencies, people often struggle with:
-- **Uncertainty** about symptom severity and urgency
-- **Difficulty** finding nearby hospitals quickly
-- **Lack of access** to immediate medical guidance
-- **Time-sensitive decisions** that could impact outcomes
+Emergency departments face significant challenges due to high loads of non-urgent visits and symptom ambiguity:
 
-RapidTriage addresses these challenges by providing instant AI-powered triage assessments and seamless hospital discovery.
+1. **Symptom Ambiguity**: Many individuals struggle to clearly articulate symptoms (e.g., "I feel off"), leading to:
+   - Under-reporting of serious conditions
+   - Overuse of emergency services for non-urgent cases
+   - Difficulty in self-assessing urgency levels
 
-### Solution
+2. **Lack of Accessible Self-Assessment Tools**: Limited availability of real-time triage tools that combine:
+   - Natural language understanding for vague inputs
+   - Clinical validation through standardized frameworks
+   - Fast response times suitable for emergency scenarios
 
-- 🤖 **AI-Powered Triage**: Multi-provider AI integration (OpenAI, Claude, Gemini) for accurate symptom analysis
-- 🎤 **Voice & Text Input**: Flexible input methods for accessibility and convenience
+3. **Emergency Room Load Balancing**: Need for tools that help users make informed decisions before arriving at hospitals
+
+### Solution: Hybrid AI Triage System
+
+RapidTriage addresses these challenges through a unique **hybrid AI architecture**:
+
+- 🤖 **LLM-Driven Symptom Parsing**: Fine-tuned language models interpret vague user inputs and ask clarifying questions iteratively
+- 📋 **Rules-Based Triage Engine**: Structured outputs flow into clinically validated frameworks (Manchester Triage/ESI) for standardized urgency classification
+- ⚡ **Real-Time Performance**: Sub-5-second response times (~3.7 seconds average) for immediate decision support
+- 🎯 **False Positive Mitigation**: Continuous monitoring and threshold calibration to reduce unnecessary hospital alerts
+- 🎤 **Multi-Modal Input**: Support for both text and voice input for maximum accessibility
 - 📍 **Location Intelligence**: Real-time hospital discovery with distance and rating sorting
 - 🗺️ **Interactive Maps**: Visual hospital locations with one-tap directions and calling
-- ⚡ **Fast Response**: Optimized for quick decision-making in emergency scenarios
 
 ## 🎬 Demo
 
@@ -55,17 +67,27 @@ RapidTriage addresses these challenges by providing instant AI-powered triage as
 
 ---
 
+## 👥 Team
+
+**Course**: CS 5100 - Artificial Intelligence | **Semester**: Spring 2025 | **Institution**: Northeastern University
+
+- **Kaustubha Venkata Eluri** - Mobile UI, LLM integration, testing & presentation
+- **Yadhukrishnan Pankajakshan** - Backend logic, rule engine, API and alert system
+
 ## ✨ Key Features
 
-### 🩺 Intelligent Symptom Assessment
-- **Multi-Modal Input**: Support for both text and voice input for maximum accessibility
-- **Comprehensive Data Collection**: Duration tracking, pain level rating, and detailed symptom descriptions
-- **AI-Powered Analysis**: Integration with multiple AI providers (OpenAI GPT, Anthropic Claude, Google Gemini) for accurate triage classification
-- **Real-Time Results**: Instant assessment with severity classification and recommendations
+### 🩺 Hybrid AI Triage System
+- **Iterative Symptom Querying**: LLM asks clarifying questions when inputs are incomplete or ambiguous (e.g., "How long have you felt this symptom?", "What is the severity?")
+- **Clinically Validated Frameworks**: Integration with Manchester Triage System (MTS) and Emergency Severity Index (ESI) for standardized urgency classification
+- **Multi-Provider AI Support**: Integration with OpenAI GPT, Anthropic Claude, and Google Gemini with intelligent fallback mechanisms
+- **Structured Output Mapping**: LLM outputs are mapped to structured data (symptom, severity, location, duration) for rules-based classification
+- **Real-Time Performance**: Average response time of ~3.7 seconds (under 5 seconds target)
+- **Accuracy Metrics**: 85-92% accuracy based on synthetic test cases across different symptom categories
+- **False Positive Monitoring**: Continuous tracking and threshold calibration to minimize unnecessary hospital alerts
 
 ### 🎤 Advanced Voice Processing
 - **High-Quality Audio Capture**: Professional-grade audio recording using Expo AV
-- **Automatic Transcription**: Seamless conversion of voice recordings to text for analysis
+- **Automatic Transcription**: Seamless conversion of voice recordings to text for LLM analysis
 - **Visual Feedback**: Real-time recording indicators and intuitive controls
 - **Cross-Platform Support**: Works seamlessly on iOS, Android, and Web
 
@@ -74,12 +96,15 @@ RapidTriage addresses these challenges by providing instant AI-powered triage as
 - **Intelligent Sorting**: Sort by rating, distance, or a combination of both
 - **Interactive Maps**: Full-featured map integration with React Native Maps
 - **Quick Actions**: One-tap access to directions, hospital calling, and emergency services
+- **Critical Case Alerts**: Automatic hospital notification for cases classified as critical
 - **Google Places Integration**: Leverages Google Places API for comprehensive hospital data
 
 ### 🏗️ Architecture Highlights
+- **Hybrid AI Architecture**: Combines LLM flexibility with structured rules-based logic
 - **Full-Stack Solution**: React Native frontend with Go backend service
 - **Microservices Architecture**: Modular backend with separate AI provider integrations
 - **RESTful API Design**: Clean API endpoints for emergency triage operations
+- **Session-Based Privacy**: Secure handling of sensitive medical information
 - **Environment-Based Configuration**: Flexible configuration for development and production
 
 ## 🎯 Key Highlights
@@ -100,6 +125,49 @@ RapidTriage addresses these challenges by providing instant AI-powered triage as
 - **Error Handling**: Comprehensive error handling and user feedback mechanisms
 - **Code Quality**: TypeScript support, ESLint configuration, and clean code practices
 - **API Design**: RESTful endpoints with proper status codes and error responses
+- **Hybrid AI Innovation**: Successfully combined LLM flexibility with clinical validation frameworks
+
+## 📊 Results & Performance Metrics
+
+### System Performance
+
+| Metric | Value |
+|--------|-------|
+| **Average Response Time** | ~3.7 seconds |
+| **Target Response Time** | < 5 seconds |
+| **Overall Accuracy** | 85-92% |
+| **False Positive Rate** | Monitored and minimized through threshold calibration |
+
+### Sample Test Results
+
+| Symptom Reported | Clarifying Questions | Triage Level | Time to Decision | False Positive? |
+|------------------|---------------------|--------------|------------------|-----------------|
+| Chest pain + dizziness | Yes (2 Qs) | Very Urgent | 4.1 sec | No |
+| Mild stomach ache | No | Non-Urgent | 3.0 sec | No |
+| Sharp headache | Yes (1 Q) | Urgent | 3.7 sec | No |
+| Pain in leg, can't walk | No | Urgent | 3.2 sec | No |
+| Light discomfort, unsure | Yes (2 Qs) | Critical | 4.5 sec | Yes |
+
+### Accuracy by Symptom Category
+
+- **Chest Pain**: 92% accuracy
+- **Stomach Ache**: 88% accuracy
+- **Headache**: 85% accuracy
+- **Leg Pain**: 90% accuracy
+- **Light Discomfort**: 80% accuracy (improved through iterative questioning)
+
+### Methodology
+
+1. **LLM Fine-Tuning**: Fine-tuned GPT-based models on medical triage data to recognize typical expressions and prompt for missing details
+2. **Rules-Based Triage Engine**: Manchester Triage System (MTS) or Emergency Severity Index (ESI) classify cases into urgency levels (Immediate, Very Urgent, Urgent, Non-Urgent)
+3. **Iterative Question Subroutine**: LLM detects incomplete information and queries for more details (severity, location, duration)
+4. **False Positive Management**: Continuous tracking and iterative threshold calibration to balance caution with efficiency
+
+### Workflow
+
+```
+User Input → LLM Clarification → Rule Engine → Triage Output → Hospital Alerts (if critical)
+```
 
 ---
 
@@ -403,29 +471,49 @@ RapidTriage/
 
 Building RapidTriage provided valuable experience in:
 
+- **Hybrid AI Architecture**: Combining LLM flexibility with rules-based clinical frameworks (Manchester Triage System, ESI)
+- **Medical Triage Systems**: Understanding clinically validated triage protocols and their implementation
+- **Iterative Questioning Systems**: Designing LLM prompts that ask clarifying questions for incomplete inputs
+- **False Positive Management**: Implementing monitoring and threshold calibration systems
 - **Full-Stack Development**: Integrating React Native frontend with Go backend
-- **AI Integration**: Working with multiple AI providers and implementing fallback strategies
+- **Multi-AI Provider Integration**: Working with OpenAI, Claude, and Gemini APIs with fallback mechanisms
 - **Cross-Platform Development**: Building apps that work seamlessly across iOS, Android, and Web
-- **Real-Time Features**: Implementing GPS tracking, audio recording, and live map updates
+- **Real-Time Features**: Implementing GPS tracking, audio recording, and live map updates with sub-5-second response times
 - **API Design**: Creating RESTful APIs with proper error handling and status codes
 - **State Management**: Managing complex application state with React hooks
-- **Performance Optimization**: Optimizing audio processing and map rendering
+- **Performance Optimization**: Optimizing audio processing, map rendering, and LLM inference times
 - **User Experience**: Designing intuitive interfaces for emergency scenarios
+- **Clinical Validation**: Ensuring AI outputs align with medical standards and protocols
 
 ## 🚀 Future Enhancements
 
-Potential improvements and features:
+Based on project reports and identified areas for improvement:
 
+### Model & Accuracy Improvements
+- [ ] **Enhanced Fine-Tuning**: Incorporate real-world or larger simulated patient logs to refine symptom parsing capabilities
+- [ ] **False Positive Optimization**: Systematically evaluate borderline cases, refining triage thresholds
+- [ ] **Dataset Expansion**: Expand training data with diverse symptom presentations
+- [ ] **On-Device LLM**: Investigate model distillation to maintain performance while lowering computational costs
+
+### User Experience
+- [ ] **UI/UX Improvements**: Make clarifying question prompts more intuitive (e.g., short yes/no follow-ups for speed)
 - [ ] **Offline Mode**: Cache hospital data and enable offline triage assessments
 - [ ] **Multi-Language Support**: Internationalization for global accessibility
+- [ ] **Dark Mode**: Enhanced UI with dark theme support
+- [ ] **Accessibility**: Improved screen reader support and accessibility features
+
+### Integration & Features
+- [ ] **Hospital Integration**: Direct integration with hospital systems for seamless alert handling
 - [ ] **User Profiles**: Save medical history and preferences
 - [ ] **Push Notifications**: Reminders and emergency alerts
 - [ ] **Telemedicine Integration**: Connect with healthcare providers directly
 - [ ] **Medical Records**: Integration with health record systems
+
+### Technical
 - [ ] **Advanced Analytics**: Track triage accuracy and user patterns
-- [ ] **Dark Mode**: Enhanced UI with dark theme support
-- [ ] **Accessibility**: Improved screen reader support and accessibility features
 - [ ] **Unit & Integration Tests**: Comprehensive test coverage
+- [ ] **Scalability**: Optimize for high-volume usage and concurrent requests
+- [ ] **Performance Monitoring**: Real-time performance tracking and alerting
 
 ## 📄 License
 
@@ -441,6 +529,25 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## 📚 References & Documentation
+
+### Project Reports
+- **Progress Report**: RapidTriage AI – Progress Report (CS 5100, Spring 2025)
+- **Final Report**: RapidTriage AI – Final Project Report (CS 5100, Spring 2025)
+
+### Literature Review
+This project builds upon research in:
+- **LLM for Medical Triage**: GPT-based models for parsing free-text medical complaints
+- **Rules-Based Triage Systems**: Manchester Triage System (MTS) and Emergency Severity Index (ESI) protocols
+- **Hybrid AI in Medical Decision-Making**: Combining LLM-driven parsing with rules-based engines
+- **BERT for Symptom Extraction**: T. M. Nguyen et al., 2021
+- **Deep Learning in Medical Imaging**: K. Rajpurkar et al., 2018 (CheXNet)
+- **Manchester Triage Group**, 2006: Standardized triage logic and guidelines
+
+### Clinical Frameworks
+- **Manchester Triage System (MTS)**: Five-level triage system used in emergency departments
+- **Emergency Severity Index (ESI)**: Five-level triage algorithm for emergency departments
+
 ## 📧 Contact & Support
 
 - **Issues**: [GitHub Issues](link-to-issues)
@@ -453,6 +560,8 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 <div align="center">
 
 **Built with ❤️ using React Native, Go, and AI**
+
+**CS 5100 - Artificial Intelligence | Spring 2025 | Northeastern University**
 
 ⭐ Star this repo if you find it helpful!
 
