@@ -640,9 +640,9 @@ This project builds upon foundational research in medical AI and triage systems:
 |----------------|------|
 | **GitHub** | [@Kaustubha-09](https://github.com/Kaustubha-09) |
 | **GitHub Issues** | [Report an Issue](https://github.com/Kaustubha-09/RapidTriage/issues) |
-| **Email** | [Contact via Email](mailto:your.email@example.com) |
-| **Portfolio** | [View Portfolio](https://yourportfolio.com) |
-| **LinkedIn** | [Connect on LinkedIn](https://linkedin.com/in/yourprofile) |
+| **Email** | [kaustubha.ev@gmail.com](mailto:kaustubha.ev@gmail.com) |
+| **Portfolio** | [kaustubha-09.github.io](https://kaustubha-09.github.io/) |
+| **LinkedIn** | [Connect on LinkedIn](https://www.linkedin.com/in/kaustubha-ve/) |
 
 </div>
 
