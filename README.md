@@ -634,12 +634,15 @@ This project builds upon foundational research in medical AI and triage systems:
 
 <div align="center">
 
+**Kaustubha Venkata Eluri**
+
 | Contact Method | Link |
 |----------------|------|
-| **GitHub Issues** | [Report an Issue](link-to-issues) |
-| **Email** | [Your Email] |
-| **Portfolio** | [Your Portfolio Link] |
-| **LinkedIn** | [Your LinkedIn] |
+| **GitHub** | [@Kaustubha-09](https://github.com/Kaustubha-09) |
+| **GitHub Issues** | [Report an Issue](https://github.com/Kaustubha-09/RapidTriage/issues) |
+| **Email** | [Contact via Email](mailto:your.email@example.com) |
+| **Portfolio** | [View Portfolio](https://yourportfolio.com) |
+| **LinkedIn** | [Connect on LinkedIn](https://linkedin.com/in/yourprofile) |
 
 </div>
 
