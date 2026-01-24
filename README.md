@@ -51,10 +51,15 @@ RapidTriage addresses these challenges through a unique **hybrid AI architecture
 
 ## 🎬 Demo
 
-<!-- Add screenshots or demo video here -->
-> **Note**: Add screenshots or a demo video link here to showcase the app in action.
+### Project Documentation
 
-### Screenshots
+Comprehensive project documentation including progress reports, final reports, and detailed methodology can be found in the `docs/images/` directory.
+
+![Project Progress Report](docs/images/progress_report_thumbnail.png)
+
+*Project Progress Report - RapidTriage AI (CS 5100, Spring 2025)*
+
+### App Screenshots
 <!-- 
 ![Home Screen](screenshots/home.png)
 ![Assessment Screen](screenshots/assessment.png)
@@ -168,6 +173,23 @@ RapidTriage addresses these challenges through a unique **hybrid AI architecture
 ```
 User Input → LLM Clarification → Rule Engine → Triage Output → Hospital Alerts (if critical)
 ```
+
+### Project Documentation
+
+The following documents provide detailed information about the project's methodology, results, and implementation:
+
+![Project Progress Report](docs/images/progress_report_thumbnail.png)
+
+*Figure 1: Project Progress Report - RapidTriage AI (CS 5100, Spring 2025)*
+
+**Key highlights from the reports:**
+- Detailed methodology combining LLM and rules-based triage systems
+- Performance metrics and accuracy analysis
+- False positive monitoring and threshold calibration
+- System architecture and workflow diagrams
+- Team contributions and implementation details
+
+> **Note**: Full project reports are available in the repository. For higher quality images or specific diagrams, refer to the original PDF documents.
 
 ---
 
