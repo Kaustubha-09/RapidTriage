@@ -20,7 +20,7 @@
 
 - [About](#-about)
 - [Demo](#-demo)
-- [Contributors](#-contributors)
+- [Team](#-team)
 - [Key Features](#-key-features)
 - [Key Highlights](#-key-highlights)
 - [Technical Achievements](#-technical-achievements)
@@ -130,11 +130,12 @@ The application features a comprehensive user interface designed for both mobile
 
 ---
 
-## 👥 Contributors
+## 👥 Team
 
-| Contributor | Contributions |
+| Team Member | Contributions |
 |-------------|--------------|
-| **Kaustubha Venkata Eluri** | Full-stack development — Mobile UI, backend logic, LLM integration, rule engine, API development, alert system, testing & presentation |
+| **Kaustubha Venkata Eluri** | Mobile UI development, LLM integration, testing & presentation |
+| **Yadhukrishnan Pankajakshan** | Backend logic, rule engine implementation, API development & alert system |
 
 ## ✨ Key Features
 
