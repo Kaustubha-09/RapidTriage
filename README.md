@@ -1,661 +1,323 @@
-# 🏥 RapidTriage
+# RapidTriage
 
-<div align="center">
+> A cross-platform medical triage application that combines large language models with clinically validated rules-based frameworks (Manchester Triage System / ESI) to deliver real-time symptom assessment and hospital discovery. React Native + Expo on the frontend, Go on the backend, multi-provider AI on the inside.
 
-**A cross-platform medical triage application that leverages hybrid AI to provide real-time symptom assessment and hospital discovery in emergency situations.**
+[![React Native](https://img.shields.io/badge/React%20Native-0.76.9-61DAFB?logo=react)](https://reactnative.dev)
+[![Expo](https://img.shields.io/badge/Expo-52.0.46-000020?logo=expo)](https://expo.dev)
+[![Go](https://img.shields.io/badge/Go-1.23-00ADD8?logo=go)](https://golang.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-[![React Native](https://img.shields.io/badge/React%20Native-0.76.9-61DAFB?logo=react&logoColor=white)](https://reactnative.dev/)
-[![Expo](https://img.shields.io/badge/Expo-52.0.46-000020?logo=expo&logoColor=white)](https://expo.dev/)
-[![Go](https://img.shields.io/badge/Go-1.23-00ADD8?logo=go&logoColor=white)](https://golang.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-[📱 Demo](#-demo) • [✨ Features](#-key-features) • [🛠️ Tech Stack](#-tech-stack) • [🚀 Installation](#-installation) • [📊 Results](#-results--performance-metrics)
-
-</div>
+Emergency departments face significant load from non-urgent visits and symptom ambiguity. Patients often struggle to articulate symptoms ("I feel off"), self-assessment tools are limited, and the gap leads to under-reporting of serious conditions and overuse of emergency services. RapidTriage bridges that gap with a hybrid AI architecture — LLMs handle natural language and iterative clarification, structured rules engines deliver clinically standardized urgency classifications. **Academic context:** built for CS 5100 — Artificial Intelligence (Spring 2025) at Northeastern University.
 
 ---
 
-## 📑 Table of Contents
+## Screenshots
 
-- [About](#-about)
-- [Demo](#-demo)
-- [Team](#-team)
-- [Key Features](#-key-features)
-- [Key Highlights](#-key-highlights)
-- [Technical Achievements](#-technical-achievements)
-- [Results & Performance Metrics](#-results--performance-metrics)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Tech Stack](#-tech-stack)
-- [Backend Integration](#-backend-integration)
-- [Development](#-development)
-- [What I Learned](#-what-i-learned)
-- [Future Enhancements](#-future-enhancements)
-- [References & Documentation](#-references--documentation)
-- [Contact & Support](#-contact--support)
+| Mobile Screens | Architecture | UI/UX Mockup |
+|:-:|:-:|:-:|
+| <img src="Screenshots/01_app_screens.png" width="240" /> | <img src="Screenshots/02_architecture_diagram.png" width="240" /> | <img src="Screenshots/03_ui_mockup.png" width="240" /> |
 
 ---
 
-## 📖 About
+## Features
 
-RapidTriage is a full-stack mobile application designed to provide real-time, AI-driven medical triage assessments and help users locate nearby healthcare facilities during emergencies. The app employs a **hybrid AI approach** combining large language models (LLMs) with clinically validated rules-based triage frameworks (Manchester Triage System/ESI) to deliver accurate, standardized urgency classifications.
+### Hybrid AI Triage
+- **LLM-driven symptom parsing** — fine-tuned language models interpret vague user inputs and ask clarifying questions iteratively
+- **Rules-based triage engine** — structured outputs flow into clinically validated frameworks (Manchester Triage / ESI) for standardized urgency classification (Immediate, Very Urgent, Urgent, Non-Urgent)
+- **Multi-provider AI** — OpenAI GPT, Anthropic Claude, and Google Gemini with intelligent fallback between providers
+- **Real-time performance** — average response time ~3.7 s, under 5 s target
+- **False positive mitigation** — continuous monitoring + threshold calibration to reduce unnecessary hospital alerts
+- **Iterative questioning** — when inputs are incomplete, the LLM asks short follow-ups (severity, location, duration)
 
-> **Academic Context**: This project was developed for **CS 5100 - Artificial Intelligence** (Spring 2025) at Northeastern University, demonstrating the intersection of healthcare, mobile computing, and artificial intelligence.
+### Multi-Modal Input
+- **Voice + text** — switch freely; voice recordings are transcribed automatically
+- **High-quality audio capture** — Expo AV recording with visual feedback indicators
+- **Cross-platform** — iOS, Android, and web from a single codebase
 
-### Problem Statement
+### Hospital Discovery
+- **Real-time GPS** — automatic location detection with manual override
+- **Smart sorting** — by distance, rating, or a combination
+- **Interactive maps** — React Native Maps with one-tap directions and direct calling
+- **Google Places integration** — comprehensive hospital metadata (distance, ratings, open/closed status)
+- **Critical case alerts** — automatic hospital notification when triage classifies a case as critical
 
-Emergency departments face significant challenges due to high loads of non-urgent visits and symptom ambiguity:
-
-1. **Symptom Ambiguity**: Many individuals struggle to clearly articulate symptoms (e.g., "I feel off"), leading to:
-   - Under-reporting of serious conditions
-   - Overuse of emergency services for non-urgent cases
-   - Difficulty in self-assessing urgency levels
-
-2. **Lack of Accessible Self-Assessment Tools**: Limited availability of real-time triage tools that combine:
-   - Natural language understanding for vague inputs
-   - Clinical validation through standardized frameworks
-   - Fast response times suitable for emergency scenarios
-
-3. **Emergency Room Load Balancing**: Need for tools that help users make informed decisions before arriving at hospitals
-
-### Solution: Hybrid AI Triage System
-
-RapidTriage addresses these challenges through a unique **hybrid AI architecture** that combines the flexibility of large language models with the reliability of clinical validation:
-
-| Feature | Description |
-|---------|-------------|
-| 🤖 **LLM-Driven Symptom Parsing** | Fine-tuned language models interpret vague user inputs and ask clarifying questions iteratively |
-| 📋 **Rules-Based Triage Engine** | Structured outputs flow into clinically validated frameworks (Manchester Triage/ESI) for standardized urgency classification |
-| ⚡ **Real-Time Performance** | Sub-5-second response times (~3.7 seconds average) for immediate decision support |
-| 🎯 **False Positive Mitigation** | Continuous monitoring and threshold calibration to reduce unnecessary hospital alerts |
-| 🎤 **Multi-Modal Input** | Support for both text and voice input for maximum accessibility |
-| 📍 **Location Intelligence** | Real-time hospital discovery with distance and rating sorting |
-| 🗺️ **Interactive Maps** | Visual hospital locations with one-tap directions and calling |
-
-## 🎬 Demo
-
-### UI/UX Design
-
-<div align="center">
-
-![UI/UX Mockup](docs/images/ui_mockup.png)
-
-*Mobile & Web UI Experience - RapidTriage AI*
-
-</div>
-
-The application features a comprehensive user interface designed for both mobile and web platforms:
-
-#### Mobile Screens
-- **Symptom Checker**: Intuitive input interface for reporting symptoms with natural language support
-- **Clarification Dialogs**: Interactive questioning system for gathering detailed symptom information
-- **Triage Results**: Clear visual indicators showing urgency levels (Urgent, Critical, etc.) with actionable recommendations
-
-#### Web Dashboard
-- **Alerts View**: Real-time monitoring of critical and urgent cases with patient information
-- **Session History**: Historical tracking of patient interactions and triage assessments with detailed analytics
-
-### Application Screenshots
-
-<div align="center">
-
-![App Screens](docs/images/app_screens.png)
-
-*RapidTriage AI Mobile Application - Live Implementation*
-
-</div>
-
-#### Emergency Assistance Module
-- **Real-time Symptom Reporting**: Chat-based interface for natural symptom description
-- **Emergency Alert System**: Visual priority indicators (URGENT, CRITICAL) with color-coded alerts
-- **Comprehensive Triage Assessment**: Detailed breakdown including:
-  - Geographic location (latitude/longitude)
-  - Precise timestamps for reporting and alert generation
-  - Confidence scores for assessment accuracy
-  - Unique emergency ID for tracking
-- **Multi-Modal Input**: Seamless switching between voice and text input
-
-#### Hospital Finder Module
-- **Interactive Map Integration**: Real-time GPS-based location visualization
-- **Smart Hospital Discovery**: Nearby facilities with comprehensive details:
-  - Distance calculations (km)
-  - User ratings and reviews
-  - Real-time availability status (Open/Closed)
-- **Quick Actions**: One-tap access to directions and direct calling
-- **Location Services**: Automatic location detection with manual override option
-
-### Live Demo
-<!-- Add links to Expo Go, web demo, or app store links -->
+### Emergency Escalation
+- **Visual priority indicators** — color-coded URGENT, CRITICAL, IMMEDIATE alerts
+- **Comprehensive assessment record** — geographic location, timestamps, confidence score, unique emergency ID for tracking
 
 ---
 
-## 👥 Team
-
-| Team Member | Contributions |
-|-------------|--------------|
-| **Kaustubha Venkata Eluri** | Mobile UI development, LLM integration, testing & presentation |
-| **Yadhukrishnan Pankajakshan** | Backend logic, rule engine implementation, API development & alert system |
-
-## ✨ Key Features
-
-### 🩺 Hybrid AI Triage System
-- **Iterative Symptom Querying**: LLM asks clarifying questions when inputs are incomplete or ambiguous (e.g., "How long have you felt this symptom?", "What is the severity?")
-- **Clinically Validated Frameworks**: Integration with Manchester Triage System (MTS) and Emergency Severity Index (ESI) for standardized urgency classification
-- **Multi-Provider AI Support**: Integration with OpenAI GPT, Anthropic Claude, and Google Gemini with intelligent fallback mechanisms
-- **Structured Output Mapping**: LLM outputs are mapped to structured data (symptom, severity, location, duration) for rules-based classification
-- **Real-Time Performance**: Average response time of ~3.7 seconds (under 5 seconds target)
-- **Accuracy Metrics**: 85-92% accuracy based on synthetic test cases across different symptom categories
-- **False Positive Monitoring**: Continuous tracking and threshold calibration to minimize unnecessary hospital alerts
-
-### 🎤 Advanced Voice Processing
-- **High-Quality Audio Capture**: Professional-grade audio recording using Expo AV
-- **Automatic Transcription**: Seamless conversion of voice recordings to text for LLM analysis
-- **Visual Feedback**: Real-time recording indicators and intuitive controls
-- **Cross-Platform Support**: Works seamlessly on iOS, Android, and Web
-
-### 🏥 Smart Hospital Discovery
-- **Location-Based Search**: Automatic detection of nearby hospitals using device GPS
-- **Intelligent Sorting**: Sort by rating, distance, or a combination of both
-- **Interactive Maps**: Full-featured map integration with React Native Maps
-- **Quick Actions**: One-tap access to directions, hospital calling, and emergency services
-- **Critical Case Alerts**: Automatic hospital notification for cases classified as critical
-- **Google Places Integration**: Leverages Google Places API for comprehensive hospital data
-
-### 🏗️ Architecture Highlights
-- **Hybrid AI Architecture**: Combines LLM flexibility with structured rules-based logic
-- **Full-Stack Solution**: React Native frontend with Go backend service
-- **Microservices Architecture**: Modular backend with separate AI provider integrations
-- **RESTful API Design**: Clean API endpoints for emergency triage operations
-- **Session-Based Privacy**: Secure handling of sensitive medical information
-- **Environment-Based Configuration**: Flexible configuration for development and production
-
-## 🎯 Key Highlights
-
-<div align="center">
-
-| Achievement | Description |
-|-------------|-------------|
-| ✅ **Full-Stack Development** | Built both frontend (React Native) and backend (Go) from scratch |
-| ✅ **Multi-AI Integration** | Implemented support for 3 different AI providers with intelligent fallback mechanisms |
-| ✅ **Cross-Platform** | Single codebase supporting iOS, Android, and Web platforms |
-| ✅ **Real-Time Features** | GPS-based location services, audio recording, and live map updates |
-| ✅ **Production-Ready** | Environment-based configuration, comprehensive error handling, and robust API integration |
-| ✅ **Modern Architecture** | Modular design with separation of concerns and reusable components |
-| ✅ **API Integration** | RESTful API design with Google Places API integration |
-| ✅ **User Experience** | Intuitive UI with haptic feedback, smooth animations, and accessibility features |
-
-</div>
-
-## 🏆 Technical Achievements
-
-| Achievement | Impact |
-|-------------|--------|
-| **Scalable Architecture** | Modular backend design enables easy integration of additional AI providers and tools |
-| **Performance Optimization** | Efficient audio processing and map rendering ensure smooth user experience even on lower-end devices |
-| **Error Handling** | Comprehensive error handling and user feedback mechanisms improve reliability and user trust |
-| **Code Quality** | TypeScript support, ESLint configuration, and clean code practices ensure maintainability |
-| **API Design** | RESTful endpoints with proper status codes and error responses enable seamless integration |
-| **Hybrid AI Innovation** | Successfully combined LLM flexibility with clinical validation frameworks for accurate triage |
-
-## 📊 Results & Performance Metrics
-
-### System Performance
-
-| Metric | Value |
-|--------|-------|
-| **Average Response Time** | ~3.7 seconds |
-| **Target Response Time** | < 5 seconds |
-| **Overall Accuracy** | 85-92% |
-| **False Positive Rate** | Monitored and minimized through threshold calibration |
-
-### Sample Test Results
-
-| Symptom Reported | Clarifying Questions | Triage Level | Time to Decision | False Positive? |
-|------------------|---------------------|--------------|------------------|-----------------|
-| Chest pain + dizziness | Yes (2 Qs) | Very Urgent | 4.1 sec | No |
-| Mild stomach ache | No | Non-Urgent | 3.0 sec | No |
-| Sharp headache | Yes (1 Q) | Urgent | 3.7 sec | No |
-| Pain in leg, can't walk | No | Urgent | 3.2 sec | No |
-| Light discomfort, unsure | Yes (2 Qs) | Critical | 4.5 sec | Yes |
-
-### Accuracy by Symptom Category
-
-| Symptom Category | Accuracy | Notes |
-|------------------|----------|-------|
-| **Chest Pain** | 92% | High accuracy due to clear symptom patterns |
-| **Leg Pain** | 90% | Well-defined symptom characteristics |
-| **Stomach Ache** | 88% | Good accuracy with common presentations |
-| **Headache** | 85% | Moderate accuracy, benefits from clarification questions |
-| **Light Discomfort** | 80% | Improved through iterative questioning system |
-
-### Methodology
-
-1. **LLM Fine-Tuning**: Fine-tuned GPT-based models on medical triage data to recognize typical expressions and prompt for missing details
-2. **Rules-Based Triage Engine**: Manchester Triage System (MTS) or Emergency Severity Index (ESI) classify cases into urgency levels (Immediate, Very Urgent, Urgent, Non-Urgent)
-3. **Iterative Question Subroutine**: LLM detects incomplete information and queries for more details (severity, location, duration)
-4. **False Positive Management**: Continuous tracking and iterative threshold calibration to balance caution with efficiency
-
-### Workflow
-
-The system follows a streamlined workflow process:
+## Architecture
 
 ```
-User Input → LLM Clarification → Rule Engine → Triage Output → Hospital Alerts (if critical)
+User Input  →  LLM Clarification  →  Rule Engine  →  Triage Output  →  Hospital Alerts (if critical)
 ```
 
-For a detailed visual representation of the system architecture and component interactions, see the [System Architecture Diagram](#-backend-integration) section.
+Five-step workflow:
 
-### Project Documentation
+1. **User input** — text or voice through the mobile app.
+2. **LLM clarification** — the Coordinator queries OpenAI / Claude / Gemini for symptom parsing and follow-up questions.
+3. **Rule engine** — structured outputs are classified by MTS / ESI logic.
+4. **Output** — triage result with urgency level + confidence score.
+5. **Alerts** — critical cases trigger automated notifications via integrated tools (Hospital Pager, Ambulance Pager).
 
-<div align="center">
+### Components
 
-![Project Progress Report](docs/images/progress_report_thumbnail.png)
+| Component | Role |
+|---|---|
+| **Coordinator** | Central orchestrator wiring user input, AI models, and tools |
+| **AI Models** | Multi-provider LLM support (OpenAI, Claude, Gemini) with fallback |
+| **Tools** | Hospital Pager, Ambulance Pager, extensible for future integrations |
 
-*Project Progress Report - RapidTriage AI (CS 5100, Spring 2025)*
+### Project structure
 
-</div>
+```
+RapidTriage/
+├── agent/                 Go backend service
+│   ├── cmd/server/        Server entry point
+│   ├── internal/
+│   │   ├── ai/            AI provider integrations
+│   │   ├── api/           HTTP handlers
+│   │   ├── config/        Configuration
+│   │   ├── models/        Data models
+│   │   ├── tools/         Pager / alert integrations
+│   │   └── triage/        MTS / ESI classification logic
+│   └── go.mod
+├── src/                   React Native frontend
+│   ├── components/
+│   ├── screens/
+│   ├── services/          API + service integrations
+│   └── utils/
+├── assets/
+├── docs/                  Reports + thumbnails
+├── Screenshots/           README captures
+└── package.json
+```
 
-Comprehensive project documentation including progress reports, final reports, and detailed methodology can be found in the `docs/images/` directory. The reports include detailed methodology, performance metrics, false positive monitoring strategies, system architecture diagrams, and team contributions.
+### API endpoints
 
-> **📄 Note**: Full project reports (Progress Report & Final Report) are available in the repository. For higher quality images or specific diagrams, refer to the original PDF documents in the `docs/` directory.
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/health` | Health check |
+| `POST` | `/api/v1/emergency/text` | Text-based symptom triage |
+| `POST` | `/api/v1/emergency` | Voice / audio-based triage |
 
 ---
 
-## 📋 Prerequisites
+## Design System
 
-Before you begin, ensure you have the following installed:
+| Token | Value |
+|---|---|
+| Brand | RapidTriage red — used for urgent/critical states |
+| Accent | Blue — informational chrome, links, primary CTAs |
+| Surface | iOS / Android system surface (light + dark) |
+| Typography | System default (SF on iOS, Roboto on Android), 5 levels: title / headline / body / callout / caption |
+| Spacing | 4-point grid (4 / 8 / 12 / 16 / 20 / 24 / 32) |
 
-- **Node.js** (v18 or higher)
-- **npm** or **yarn**
-- **Expo CLI** (`npm install -g expo-cli`)
-- **Go** (v1.23 or higher) - for backend development
-- **Google Places API Key** - for hospital finder functionality
+Color-coded urgency badges: `Immediate / Very Urgent / Urgent / Non-Urgent`. Haptic feedback via `expo-haptics` on every decision-point tap; blur effects via `expo-blur` for emergency modal sheets.
 
-## 🚀 Quick Start
+---
 
-Get RapidTriage up and running in minutes:
+## Tech Stack
 
-```bash
-# Clone the repository
-git clone <repository-url>
-cd RapidTriage
+### Frontend
 
-# Install dependencies
-npm install
+| Layer | Choice |
+|---|---|
+| Framework | React Native 0.76.9 |
+| Platform | Expo ~52.0.46 |
+| Navigation | React Navigation 7.x |
+| Audio | Expo AV 15.x |
+| Maps | React Native Maps 1.22 |
+| HTTP | Axios 1.8 |
+| Location | Expo Location 18.x |
+| State | React hooks |
+| Animation | react-native-reanimated, react-native-gesture-handler |
+| Tactile | expo-haptics, expo-blur |
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys
+### Backend
 
-# Start the development server
-npm start
-```
+| Layer | Choice |
+|---|---|
+| Language | Go 1.23 |
+| AI providers | OpenAI GPT, Anthropic Claude, Google Gemini |
+| Architecture | RESTful API, modular `internal/` packages |
+| Tools | Hospital Pager, Ambulance Pager |
 
-## 🛠️ Installation
+---
 
-### Step 1: Clone the Repository
+## Getting Started
+
+### Prerequisites
+- Node.js v18+
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+- Go v1.23+ for backend
+- Google Places API key for hospital finder
+
+### Setup
 
 ```bash
 git clone <repository-url>
 cd RapidTriage
-```
 
-### Step 2: Install Dependencies
-
-```bash
+# Frontend
 npm install
-```
 
-For backend dependencies:
-```bash
-cd agent
-go mod download
-```
-
-### Step 3: Configure Environment Variables
-
-Create a `.env` file in the root directory:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and configure your settings:
-
-```env
-# Backend API Base URL
-API_BASE_URL=http://localhost:8080/api/v1
-
-# Google Places API Key (required for hospital finder)
-GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
+# Backend
+cd agent && go mod download && cd ..
 
 # Environment
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```env
+API_BASE_URL=http://localhost:8080/api/v1
+GOOGLE_PLACES_API_KEY=your_google_places_api_key
 NODE_ENV=development
 ```
 
-#### 🔑 Getting API Keys
+**Google Places key:** Cloud Console → enable **Places API** → Credentials → Create API Key → restrict to Places API → paste into `.env`.
 
-**Google Places API Key:**
-1. Visit [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Enable the **Places API**
-4. Navigate to **Credentials** → **Create Credentials** → **API Key**
-5. Restrict the API key to **Places API** for security
-6. Copy the key to your `.env` file
+### Run
 
-**Backend API:**
-- Runs locally by default at `http://localhost:8080/api/v1`
-- For production, update `API_BASE_URL` to your deployed backend URL
-
-### Step 4: Start Development Servers
-
-**Frontend (Terminal 1):**
+**Terminal 1 — Frontend:**
 ```bash
 npm start
+# press i (iOS), a (Android), w (web), or scan QR for Expo Go
 ```
 
-This starts the Expo development server. Options:
-- Press `i` → Open iOS simulator
-- Press `a` → Open Android emulator  
-- Scan QR code → Open in Expo Go app on your phone
-- Press `w` → Open in web browser
-
-**Backend (Terminal 2):**
+**Terminal 2 — Backend:**
 ```bash
 cd agent
 go run cmd/server/main.go
 ```
 
-## 🏃 Running the App
-
-### Mobile Development
+Platform shortcuts:
 
 ```bash
-# iOS
-npm run ios
-
-# Android
-npm run android
-
-# Web
-npm run web
+npm run ios       # iOS simulator
+npm run android   # Android emulator
+npm run web       # browser
+npm test          # test suite
+npm run lint      # ESLint
 ```
-
-## 🏗️ Project Structure
-
-```
-RapidTriage/
-├── agent/                 # Go backend service
-│   ├── cmd/server/       # Server entry point
-│   ├── internal/         # Internal packages
-│   │   ├── ai/          # AI provider integrations
-│   │   ├── api/         # API handlers
-│   │   ├── config/      # Configuration
-│   │   ├── models/      # Data models
-│   │   ├── tools/       # Tool integrations
-│   │   └── triage/      # Triage classification logic
-│   └── go.mod           # Go dependencies
-├── src/
-│   ├── components/      # React Native components
-│   ├── screens/        # App screens
-│   ├── services/       # API and service integrations
-│   └── utils/          # Utility functions and config
-├── assets/             # Images, fonts, and other assets
-└── package.json        # Node.js dependencies
-```
-
-## 🛠️ Tech Stack
-
-### Frontend Technologies
-| Category | Technology | Purpose |
-|----------|-----------|---------|
-| **Framework** | React Native 0.76.9 | Cross-platform mobile development |
-| **Platform** | Expo ~52.0.46 | Development tooling and deployment |
-| **Navigation** | React Navigation 7.x | Screen routing and navigation |
-| **Audio** | Expo AV 15.x | Voice recording and playback |
-| **Maps** | React Native Maps 1.22 | Interactive map visualization |
-| **HTTP Client** | Axios 1.8 | API communication |
-| **Location** | Expo Location 18.x | GPS and location services |
-| **State Management** | React Hooks | Component state management |
-
-### Backend Technologies
-| Category | Technology | Purpose |
-|----------|-----------|---------|
-| **Language** | Go 1.23 | High-performance backend service |
-| **AI Providers** | OpenAI API | GPT-based symptom analysis |
-| **AI Providers** | Anthropic Claude | Alternative AI analysis |
-| **AI Providers** | Google Gemini | Multi-provider fallback |
-| **Architecture** | RESTful API | Clean API design |
-
-### Key Libraries & Tools
-- **@react-native-community/geolocation** - Location services
-- **@react-native-community/slider** - UI components
-- **expo-blur** - Visual effects
-- **expo-haptics** - Tactile feedback
-- **react-native-gesture-handler** - Gesture recognition
-- **react-native-reanimated** - Smooth animations
-
-## 🔌 Backend Integration
-
-RapidTriage uses a Go-based backend service for AI-powered triage analysis. The backend architecture supports multiple AI providers with intelligent fallback mechanisms.
-
-### System Architecture
-
-<div align="center">
-
-![System Architecture Diagram](docs/images/architecture_diagram.png)
-
-*RapidTriage AI System Architecture - Workflow: Input → LLM Clarification → Rule Engine → Output → Alerts*
-
-</div>
-
-The architecture follows a streamlined five-step workflow:
-
-1. **User Input** → Users interact through the mobile application with text or voice input
-2. **LLM Clarification** → The Coordinator queries multiple LLM providers (OpenAI, Claude, Gemini) for symptom clarification and iterative questioning
-3. **Rule Engine** → Structured outputs are processed through clinically validated triage rules (Manchester Triage System/ESI)
-4. **Output** → Triage results are generated with standardized urgency classifications
-5. **Alerts** → Critical cases trigger automated alerts through integrated tools (Hospital Pager, Ambulance Pager)
-
-#### Key Components
-
-| Component | Role |
-|-----------|------|
-| **Coordinator** | Central orchestrator managing workflow between user input, AI models, and tools |
-| **AI Models** | Multi-provider LLM support (OpenAI, Claude, Gemini) with intelligent fallback mechanisms |
-| **Tools** | Hospital Pager, Ambulance Pager, and extensible framework for future integrations |
-
-### API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/v1/health` | Health check endpoint |
-| `POST` | `/api/v1/emergency/text` | Text-based symptom triage analysis |
-| `POST` | `/api/v1/emergency` | Voice/audio-based triage analysis |
-
-### Connecting to Backend
-
-1. **Local Development**: Backend runs on `http://localhost:8080/api/v1` by default (see [Installation](#-installation) for setup)
-2. **Production**: Update `API_BASE_URL` in `.env` to your production endpoint
-3. **Authentication**: Add authentication headers in `src/services/ChatService.js` if required
-
-> **Note**: For detailed backend architecture, see the [Project Structure](#-project-structure) section above.
-
-## 📱 Permissions
-
-The app requires the following permissions:
-
-- **Microphone** - For voice recording
-- **Location** - For finding nearby hospitals
-
-These are automatically requested when needed. Permissions are configured in `app.json`.
-
-## 🧪 Testing
-
-```bash
-npm test
-```
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-| Issue | Solution |
-|-------|----------|
-| **Expo Go app can't connect to development server** | Ensure your phone and computer are on the same Wi-Fi network. Check firewall settings if issues persist. |
-| **Google Places API not working** | Verify your API key is correct, has Places API enabled, and billing is set up in Google Cloud Console. |
-| **Backend connection errors** | Ensure the backend server is running (`go run cmd/server/main.go`) and `API_BASE_URL` in `.env` matches your backend URL. |
-| **Audio recording not working** | Grant microphone permissions in your device settings. On iOS, check `Info.plist` permissions. |
-| **Location services not working** | Enable location permissions in device settings and ensure GPS is enabled. Check `app.json` for proper permission configuration. |
-
-## 📝 Development
-
-### Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start Expo development server |
-| `npm run ios` | Run on iOS simulator |
-| `npm run android` | Run on Android emulator |
-| `npm run web` | Run in web browser |
-| `npm run lint` | Run ESLint for code quality |
-| `npm test` | Run test suite |
-
-### Code Quality
-
-- **ESLint**: Code linting and style enforcement
-- **TypeScript**: Type checking for improved code reliability
-- **Prettier**: Code formatting (if configured)
-- **Git Hooks**: Pre-commit checks (if configured)
-
-## 🎓 What I Learned
-
-Building RapidTriage provided valuable experience across multiple domains:
-
-### Technical Skills
-- **Hybrid AI Architecture**: Combining LLM flexibility with rules-based clinical frameworks (Manchester Triage System, ESI)
-- **Full-Stack Development**: Integrating React Native frontend with Go backend services
-- **Multi-AI Provider Integration**: Working with OpenAI, Claude, and Gemini APIs with intelligent fallback mechanisms
-- **Cross-Platform Development**: Building apps that work seamlessly across iOS, Android, and Web
-- **API Design**: Creating RESTful APIs with proper error handling, status codes, and documentation
-- **State Management**: Managing complex application state with React hooks and context
-- **Performance Optimization**: Optimizing audio processing, map rendering, and LLM inference times
-
-### Domain Knowledge
-- **Medical Triage Systems**: Understanding clinically validated triage protocols and their implementation
-- **Iterative Questioning Systems**: Designing LLM prompts that ask clarifying questions for incomplete inputs
-- **False Positive Management**: Implementing monitoring and threshold calibration systems
-- **Clinical Validation**: Ensuring AI outputs align with medical standards and protocols
-
-### User Experience
-- **Real-Time Features**: Implementing GPS tracking, audio recording, and live map updates with sub-5-second response times
-- **Emergency UI Design**: Designing intuitive interfaces for high-stress emergency scenarios
-- **Accessibility**: Creating inclusive designs that work for diverse user needs
-
-## 🚀 Future Enhancements
-
-Based on project reports and identified areas for improvement, the following enhancements are planned:
-
-### Model & Accuracy Improvements
-
-- [ ] **Enhanced Fine-Tuning**: Incorporate real-world or larger simulated patient logs to refine symptom parsing capabilities
-- [ ] **False Positive Optimization**: Systematically evaluate borderline cases, refining triage thresholds through machine learning
-- [ ] **Dataset Expansion**: Expand training data with diverse symptom presentations across demographics and conditions
-- [ ] **On-Device LLM**: Investigate model distillation techniques to maintain performance while lowering computational costs
-
-### User Experience
-
-- [ ] **UI/UX Improvements**: Make clarifying question prompts more intuitive (e.g., short yes/no follow-ups for speed)
-- [ ] **Offline Mode**: Cache hospital data and enable offline triage assessments for areas with poor connectivity
-- [ ] **Multi-Language Support**: Internationalization (i18n) for global accessibility and broader user base
-- [ ] **Dark Mode**: Enhanced UI with dark theme support for reduced eye strain
-- [ ] **Accessibility**: Improved screen reader support, voice commands, and accessibility features for users with disabilities
-
-### Integration & Features
-
-- [ ] **Hospital Integration**: Direct integration with hospital systems (HL7, FHIR) for seamless alert handling
-- [ ] **User Profiles**: Save medical history, preferences, and emergency contacts for personalized experience
-- [ ] **Push Notifications**: Real-time reminders, emergency alerts, and follow-up care notifications
-- [ ] **Telemedicine Integration**: Connect with healthcare providers directly through video consultations
-- [ ] **Medical Records**: Integration with electronic health record (EHR) systems for comprehensive patient history
-
-### Technical Improvements
-
-- [ ] **Advanced Analytics**: Track triage accuracy, user patterns, and system performance with detailed dashboards
-- [ ] **Unit & Integration Tests**: Comprehensive test coverage (target: >80%) for reliability and maintainability
-- [ ] **Scalability**: Optimize for high-volume usage and concurrent requests with load balancing and caching
-- [ ] **Performance Monitoring**: Real-time performance tracking, alerting, and automated optimization
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📚 References & Documentation
-
-### Project Reports
-
-| Report | Description |
-|--------|-------------|
-| **Progress Report** | RapidTriage AI – Progress Report (CS 5100, Spring 2025) |
-| **Final Report** | RapidTriage AI – Final Project Report (CS 5100, Spring 2025) |
-
-### Literature Review
-
-This project builds upon foundational research in medical AI and triage systems:
-
-| Research Area | Key Contribution |
-|---------------|------------------|
-| **LLM for Medical Triage** | GPT-based models for parsing free-text medical complaints |
-| **Rules-Based Triage Systems** | Manchester Triage System (MTS) and Emergency Severity Index (ESI) protocols |
-| **Hybrid AI in Medical Decision-Making** | Combining LLM-driven parsing with rules-based engines |
-| **BERT for Symptom Extraction** | T. M. Nguyen et al., 2021 - Advanced NLP for medical symptom extraction |
-| **Deep Learning in Medical Imaging** | K. Rajpurkar et al., 2018 (CheXNet) - Deep learning applications in healthcare |
-| **Manchester Triage Group** | 2006 - Standardized triage logic and clinical guidelines |
-
-### Clinical Frameworks
-
-| Framework | Description |
-|-----------|-------------|
-| **Manchester Triage System (MTS)** | Five-level triage system used in emergency departments worldwide |
-| **Emergency Severity Index (ESI)** | Five-level triage algorithm for emergency departments, widely adopted in North America |
-
-## 📧 Contact & Support
-
-<div align="center">
-
-**Kaustubha Venkata Eluri**
-
-| Contact Method | Link |
-|----------------|------|
-| **GitHub** | [@Kaustubha-09](https://github.com/Kaustubha-09) |
-| **GitHub Issues** | [Report an Issue](https://github.com/Kaustubha-09/RapidTriage/issues) |
-| **Email** | [kaustubha.ev@gmail.com](mailto:kaustubha.ev@gmail.com) |
-| **Portfolio** | [kaustubha-09.github.io](https://kaustubha-09.github.io/) |
-| **LinkedIn** | [Connect on LinkedIn](https://www.linkedin.com/in/kaustubha-ve/) |
-
-</div>
 
 ---
 
-<div align="center">
+## Results & Performance
+
+| Metric | Value |
+|---|---|
+| Average response time | ~3.7 s |
+| Target | < 5 s |
+| Overall accuracy | 85–92% |
+| False positive rate | Monitored, threshold-calibrated |
+
+### Sample test cases
+
+| Symptom | Clarifying questions | Triage level | Time | False positive? |
+|---|---|---|---|---|
+| Chest pain + dizziness | 2 | Very Urgent | 4.1 s | No |
+| Mild stomach ache | 0 | Non-Urgent | 3.0 s | No |
+| Sharp headache | 1 | Urgent | 3.7 s | No |
+| Pain in leg, can't walk | 0 | Urgent | 3.2 s | No |
+| Light discomfort, unsure | 2 | Critical | 4.5 s | Yes |
+
+### Accuracy by category
+
+| Category | Accuracy | Notes |
+|---|---|---|
+| Chest pain | 92% | Clear symptom patterns |
+| Leg pain | 90% | Well-defined characteristics |
+| Stomach ache | 88% | Common presentations decode reliably |
+| Headache | 85% | Benefits from clarification questions |
+| Light discomfort | 80% | Improved via iterative questioning |
 
 ---
 
-**Built with ❤️ using React Native, Go, and AI**
+## Permissions
 
-⭐ **Star this repo if you find it helpful!** ⭐
+- **Microphone** — voice recording
+- **Location** — nearby hospitals
 
-[⬆ Back to Top](#-rapidtriage)
+Configured in `app.json`; requested at runtime when needed.
 
-</div>
+---
+
+## Roadmap
+
+### Model & accuracy
+- Enhanced fine-tuning on real-world / larger synthetic patient logs
+- False-positive optimization on borderline cases
+- Dataset expansion across demographics and conditions
+- On-device LLM via distillation for cost + latency
+
+### User experience
+- Yes/no clarification follow-ups for speed
+- Offline mode with cached hospital data
+- i18n / multi-language support
+- Dark mode
+- Improved screen reader + voice command accessibility
+
+### Integration
+- HL7 / FHIR hospital system integration
+- User profiles with medical history + emergency contacts
+- Push notifications for alerts and follow-ups
+- Telemedicine video consultations
+- EHR integration
+
+### Technical
+- Triage accuracy + system performance dashboards
+- >80% test coverage target
+- Load balancing + caching for high-volume usage
+- Real-time performance monitoring
+
+---
+
+## Troubleshooting
+
+| Issue | Fix |
+|---|---|
+| Expo Go can't connect | Phone + computer on same Wi-Fi; check firewall |
+| Google Places not working | Verify key + Places API enabled + billing set |
+| Backend connection errors | Confirm backend running on `:8080`; check `API_BASE_URL` |
+| Audio recording fails | Grant microphone permission in device settings |
+| Location not working | Enable location permission + GPS in device settings |
+
+---
+
+## Team
+
+| Member | Contributions |
+|---|---|
+| **Kaustubha Venkata Eluri** | Mobile UI development, LLM integration, testing, presentation |
+| **Yadhukrishnan Pankajakshan** | Backend logic, rule engine, API development, alert system |
+
+---
+
+## References
+
+| Area | Contribution |
+|---|---|
+| LLM for medical triage | GPT-based models for free-text complaint parsing |
+| Rules-based triage | Manchester Triage System (MTS) + Emergency Severity Index (ESI) |
+| Hybrid AI in medical decision-making | LLM-driven parsing combined with rules-based engines |
+| BERT for symptom extraction | T. M. Nguyen et al., 2021 |
+| Deep learning in medical imaging | K. Rajpurkar et al., 2018 (CheXNet) |
+| Manchester Triage Group | 2006 — standardized triage logic |
+
+Progress and final project reports live in `docs/` (thumbnails referenced in `docs/images/`).
+
+---
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+*Built with React Native, Go, and a hybrid AI architecture by Kaustubha Eluri and Yadhukrishnan Pankajakshan for CS 5100 at Northeastern University.*
