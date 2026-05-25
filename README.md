@@ -290,6 +290,82 @@ Configured in `app.json`; requested at runtime when needed.
 
 ---
 
+## Tradeoffs
+
+- **Hybrid AI, not pure LLM.** A pure-LLM triage system can hallucinate escalation errors and has no auditable rationale; a pure rule-based system is too rigid for natural-language complaints. We split: LLM parses, rule engine classifies. Each layer plays to its strength. See [docs/decisions.md, ADR-001](docs/decisions.md#adr-001--hybrid-ai-llm-clarification--rule-based-classification).
+- **MTS/ESI-*inspired*, not -*certified*.** We adapted the decision-tree pattern as a pedagogical reference. The canonical rule sets are licensed and require formal training. We don't pretend otherwise. See [ADR-002](docs/decisions.md#adr-002--mtsesi-inspired-not-mtsesi-certified).
+- **Mock-backed tools.** The agent's tool-invocation pattern is real — concurrent fan-out, retries, timeouts. The HTTP layer in `mockHTTPClient` returns hardcoded JSON. Production wiring is a one-file swap per tool. See [ADR-004](docs/decisions.md#adr-004--mock-backed-tools).
+- **Safety-biased fallback.** If classifier confidence < 0.5, the code falls back to YELLOW (Urgent), not GREEN (Non-Urgent). Type-II error (missing an urgent case) is much worse than Type-I (escalating a non-urgent case). See [ADR-007](docs/decisions.md#adr-007--fallback-to-yellow-on-low-classifier-confidence).
+- **Go over Python or Node for the backend.** Native goroutine concurrency for tool fan-out, graceful shutdown with deadline so in-flight emergencies aren't cut off on SIGTERM, single-binary deploy, strict timeouts at every layer.
+- **Expo over native split.** One codebase for iOS / Android / web; the team is 2 people and the deadline was one semester. Native split would have tripled the surface for a wash on UX. See [ADR-005](docs/decisions.md#adr-005--mobile--expo--react-native-not-a-native-split).
+
+Full ADRs in [docs/decisions.md](docs/decisions.md).
+
+---
+
+## Limitations
+
+See [docs/limitations.md](docs/limitations.md). Top items:
+
+- **Not clinically certified.** Academic project, not a medical device.
+- **Tools are mocked**, not connected to real hospital / ambulance / booking systems.
+- **Performance numbers are demo-grade**, not statistically rigorous evaluation.
+- **No offline mode, no on-device LLM, no multilingual support yet** — all roadmap items.
+- **No HIPAA compliance audit.** Symptom descriptions can be PHI in some jurisdictions.
+
+---
+
+## Quality Gates
+
+- `go build ./...` passes clean against Go 1.23.
+- `go vet ./...` produces no warnings.
+- React Native lints clean via `expo lint`.
+- All HTTP requests bounded by `ReadTimeout=30s`, `WriteTimeout=30s`, `IdleTimeout=120s`.
+- All AI provider calls bounded by `API_TIMEOUT_SECONDS` (default 30s).
+- Server lifecycle wired to SIGINT/SIGTERM with a 10-second graceful-shutdown deadline.
+- Audio upload capped at `MAX_AUDIO_SIZE_MB` (default 20 MB).
+- Tool fan-out bounded by `MaxConcurrentTools` (default 5).
+- Classifier confidence threshold + safer fallback code (YELLOW) configurable in `ClassifierConfig`.
+
+---
+
+## Project Stats
+
+- **5** React Native screens, **3** services (Audio, Chat, Location)
+- **~15** Go packages under `agent/internal/` (ai, api, config, models, tools/*, triage)
+- **4** AI providers (Gemini default, Claude, OpenAI, Llama)
+- **4** tools (Location, Hospital, Ambulance, Booking) all on a shared `Do(req)` interface
+- **3** REST endpoints (`/api/v1/health`, `/api/v1/emergency`, `/api/v1/emergency/text`)
+- **4** triage codes (`IMMEDIATE`, `VERY URGENT`, `URGENT`, `NON-URGENT`)
+- **~3.7s** average response time on classroom test set
+- **CPU-only inference path** — no GPU dependency
+
+---
+
+## Resume Bullets
+
+- Built a **cross-platform medical triage system** combining LLM-driven natural-language symptom parsing with a deterministic rule-based classifier — React Native (Expo) frontend, Go backend, multi-provider AI dispatch (Gemini / Claude / OpenAI / Llama).
+- Architected the Go backend with **bounded concurrency** (`MaxConcurrentTools = 5`), **graceful shutdown** on SIGINT/SIGTERM with a 10-second deadline, **strict per-layer timeouts** (ReadTimeout, WriteTimeout, AI call timeout, tool retry interval), and a **tool registry** pattern for hospital / ambulance / booking integrations.
+- Designed a **safety-biased fallback policy**: classifier confidence < 0.5 → falls back to YELLOW (Urgent), not GREEN (Non-Urgent). Type-II error is much worse than Type-I error in a triage context; the fallback direction encodes the safety policy.
+- Wired **multi-provider AI dispatch** via env-var configuration — `AI_MODEL_TYPE` picks the provider, general env vars take priority, provider-specific env vars are fallback. Swapping providers is a config flip, not a code change.
+- Documented architecture, decisions (**9 ADRs**), and limitations with **explicit safety-critical honesty** — `mockHTTPClient` for tools, MTS/ESI-*inspired* not -*certified*, demo-grade performance numbers, full gap list for clinical deployment (HIPAA, FDA, IRB, hospital partnerships).
+
+---
+
+## Interview Talking Points
+
+**Why hybrid AI, not pure LLM.** Pure-LLM triage produces escalation errors with no audit trail. Pure rule-based is too rigid for natural complaints. We split the responsibility: the LLM parses unstructured language into a structured `EmergencySituation`; the deterministic rule engine maps that structure to one of four triage codes. Each layer plays to its strength. The contract between them is a typed struct, not a free-form string.
+
+**Safety-biased fallback.** Classifier confidence < 0.5 → YELLOW (Urgent), not GREEN (Non-Urgent). This is a deliberate engineering choice that encodes a safety policy. Type-II error in a triage system is much worse than Type-I error. Documenting which way the system errs when uncertain is, in safety-critical software, more important than documenting the happy path.
+
+**Why Go for the backend.** Three concrete reasons. (1) Native goroutine concurrency for parallel tool fan-out — paging the hospital, dispatching ambulance, and reverse-geocoding location happen simultaneously, bounded by `MaxConcurrentTools = 5`. (2) Graceful shutdown with deadline — `signal.NotifyContext` + `server.Shutdown(ctx)` with a 10-second timeout means an in-flight emergency request isn't cut off on SIGTERM. (3) Strict timeouts at every layer — HTTP server timeouts, per-AI-call timeout, per-tool retry interval — every external dependency has a bounded wait.
+
+**Mock-backed tools, honestly named.** `HospitalTool`, `AmbulanceTool`, etc. dispatch through `mockHTTPClient` in `cmd/server/main.go`. The agent's tool-invocation pattern is real; the network integrations are not. We documented this explicitly rather than pretending we have a real hospital paging integration. The production wiring is a one-file swap per tool.
+
+**Multi-provider AI as resilience, not novelty.** Gemini is the default for cost. Claude and OpenAI are alternates because (a) one provider's outage shouldn't block emergency triage, (b) different providers excel at different prompts. The dispatch is one switch statement reading from env. Real engineering value: keeps the system functional during provider incidents.
+
+---
+
 ## Team
 
 | Member | Contributions |
